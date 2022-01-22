@@ -8,6 +8,7 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Models
 {
     public class TrackPosition
     {
+        public int Id { get; set; }
         public int Position { get; set; }
         public int TrackId { get; set; }
         public virtual Track Track { get; set; }
