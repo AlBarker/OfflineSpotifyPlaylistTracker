@@ -13,14 +13,14 @@ namespace OfflineSpotifyPlaylistTracker
     {
         public void PlaySong(Track track)
         {
-            string audioFileName = $"C:\\temp\\{track.FileName}.mp3";
+            string audioFileName = $"C:\\Countdown\\playlist\\{track.FileName}.m4a";
             PlayAudioFile(audioFileName);
             Console.WriteLine($"Finished playing track {track.Name}");
         }
 
         public void PlayFillerSound(int trackNumber)
         {
-            string audioFileName = $"C:\\temp\\{trackNumber}.m4a";
+            string audioFileName = $"C:\\Countdown\\filler\\{trackNumber}.m4a";
             PlayAudioFile(audioFileName);
             Console.WriteLine($"Finished playing filler sound {trackNumber}");
         }
