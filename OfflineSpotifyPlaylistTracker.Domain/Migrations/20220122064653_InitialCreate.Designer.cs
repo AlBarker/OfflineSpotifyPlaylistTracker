@@ -10,8 +10,8 @@ using OfflineSpotifyPlaylistTracker.Domain;
 namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
 {
     [DbContext(typeof(SpotifyPlaylistTrackerContext))]
-    [Migration("20220122055518_SeedUserData")]
-    partial class SeedUserData
+    [Migration("20220122064653_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,9 +44,11 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tracks");
                 });
@@ -150,6 +152,17 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                         });
                 });
 
+            modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.Track", b =>
+                {
+                    b.HasOne("OfflineSpotifyPlaylistTracker.Domain.Models.User", "User")
+                        .WithMany("Tracks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.TrackPosition", b =>
                 {
                     b.HasOne("OfflineSpotifyPlaylistTracker.Domain.Models.Track", "Track")
@@ -159,6 +172,11 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Track");
+                });
+
+            modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.User", b =>
+                {
+                    b.Navigation("Tracks");
                 });
 #pragma warning restore 612, 618
         }

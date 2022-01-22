@@ -6,23 +6,27 @@ namespace OfflineSpotifyPlaylistTracker
 {
     public  class SpotifyService
     {
-
-        public SpotifyService()
+        private readonly RepositoryService repositoryService;
+        public SpotifyService(RepositoryService repositorySerivce)
         {
+            this.repositoryService = repositorySerivce;
         }
-        public async Task<IEnumerable<Track>> GetPlaylistTracks()
+
+        public async Task<IEnumerable<SpotifyTrackModel>> GetPlaylistTracks()
         {
             var client = await GetClient();
 
-            var playlistResponse = await client.Playlists.GetItems("2CuhODa4xTTlemWopeXG71");
+            var playlistResponse = await client.Playlists.GetItems("2rdxeAIgVMRLmNHiIAQqmV");
+
+            var users = await repositoryService.GetUsers();
 
             return playlistResponse.Items.Select((v, i) =>
             {
                 var track = (FullTrack)v.Track;
                 var artists = String.Join(", ", track.Artists.Select(x => x.Name));
-                return new Track
+                return new SpotifyTrackModel
                 {
-                    Id = i,
+                    Id = i + 1,
                     Name = track.Name,
                     Artist = artists,
                     FileName = String.Join(" ", artists, track.Name),
@@ -41,5 +45,15 @@ namespace OfflineSpotifyPlaylistTracker
 
             return new SpotifyClient(config.WithToken(response.AccessToken));
         }
+    }
+
+    public class SpotifyTrackModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Artist { get; set; }
+        public string FileName { get; set; }
+        public string AlbumArt { get; set; }
+        public string UserId { get; set; }
     }
 }

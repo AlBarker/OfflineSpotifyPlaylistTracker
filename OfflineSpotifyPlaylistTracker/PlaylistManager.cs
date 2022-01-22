@@ -4,7 +4,7 @@ namespace OfflineSpotifyPlaylistTracker
     public class PlaylistManager
     {
         private IPlaybackService _playbackService;
-        private IRepositoryService _repositoryService;
+        private RepositoryService _repositoryService;
 
         const int CountSongs = 100;
 

@@ -41,6 +41,7 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
@@ -152,8 +153,10 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
             modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.Track", b =>
                 {
                     b.HasOne("OfflineSpotifyPlaylistTracker.Domain.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Tracks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -167,6 +170,11 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Track");
+                });
+
+            modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.User", b =>
+                {
+                    b.Navigation("Tracks");
                 });
 #pragma warning restore 612, 618
         }

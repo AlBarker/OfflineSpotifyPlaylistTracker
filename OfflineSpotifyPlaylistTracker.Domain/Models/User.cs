@@ -11,5 +11,6 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Models
         public string Id { get; set; }
         public string DisplayName { get; set; }
         public string ImageName { get; set; }
+        public List<Track> Tracks { get; set; }
     }
 }

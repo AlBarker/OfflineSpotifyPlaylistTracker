@@ -10,8 +10,8 @@ using OfflineSpotifyPlaylistTracker.Domain;
 namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
 {
     [DbContext(typeof(SpotifyPlaylistTrackerContext))]
-    [Migration("20220122054040_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220122065804_ForeignKeyToTrack")]
+    partial class ForeignKeyToTrack
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,9 +44,11 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tracks");
                 });
@@ -86,6 +88,79 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "karnage11i",
+                            DisplayName = "Alex Karney",
+                            ImageName = "ak"
+                        },
+                        new
+                        {
+                            Id = "magsatire",
+                            DisplayName = "Jack McGrath",
+                            ImageName = "jm"
+                        },
+                        new
+                        {
+                            Id = "1232101260",
+                            DisplayName = "Chris Quigley",
+                            ImageName = "cq"
+                        },
+                        new
+                        {
+                            Id = "1238290776",
+                            DisplayName = "Joshua Landy",
+                            ImageName = "jl"
+                        },
+                        new
+                        {
+                            Id = "1233033915",
+                            DisplayName = "Alex Barker",
+                            ImageName = "ab"
+                        },
+                        new
+                        {
+                            Id = "1244598275",
+                            DisplayName = "Daniel Hornblower",
+                            ImageName = "db"
+                        },
+                        new
+                        {
+                            Id = "genjamon1234",
+                            DisplayName = "Josh Anderson",
+                            ImageName = "ja"
+                        },
+                        new
+                        {
+                            Id = "braeden.wilson",
+                            DisplayName = "Braeden Wilson",
+                            ImageName = "bw"
+                        },
+                        new
+                        {
+                            Id = "1278556031",
+                            DisplayName = "Matt Knightbridge",
+                            ImageName = "mk"
+                        },
+                        new
+                        {
+                            Id = "griffkyn22",
+                            DisplayName = "Griffyn Heels",
+                            ImageName = "gh"
+                        });
+                });
+
+            modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.Track", b =>
+                {
+                    b.HasOne("OfflineSpotifyPlaylistTracker.Domain.Models.User", "User")
+                        .WithMany("Tracks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.TrackPosition", b =>
@@ -97,6 +172,11 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                         .IsRequired();
 
                     b.Navigation("Track");
+                });
+
+            modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.User", b =>
+                {
+                    b.Navigation("Tracks");
                 });
 #pragma warning restore 612, 618
         }
