@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OfflineSpotifyPlaylistTracker.Models
+namespace OfflineSpotifyPlaylistTracker.Domain.Models
 {
     public class User
     {

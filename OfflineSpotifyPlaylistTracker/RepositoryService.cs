@@ -1,4 +1,5 @@
-﻿using OfflineSpotifyPlaylistTracker.Models;
+﻿using OfflineSpotifyPlaylistTracker.Domain.Models;
+using OfflineSpotifyPlaylistTracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

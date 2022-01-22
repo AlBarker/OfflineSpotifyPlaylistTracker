@@ -1,4 +1,4 @@
-﻿namespace OfflineSpotifyPlaylistTracker.Models
+﻿namespace OfflineSpotifyPlaylistTracker.Domain.Models
 {
     public class Track
     {

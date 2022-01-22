@@ -1,4 +1,5 @@
-﻿using OfflineSpotifyPlaylistTracker.Models;
+﻿using OfflineSpotifyPlaylistTracker.Domain.Models;
+using OfflineSpotifyPlaylistTracker.Models;
 using Vlc.DotNet.Core;
 
 namespace OfflineSpotifyPlaylistTracker
