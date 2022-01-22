@@ -25,29 +25,74 @@ namespace OfflineSpotifyPlaylistTracker.Domain
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            //var iron = new Resource { Id = 1, Name = "Iron", Price = 10.5, CountAvailable = 100 };
-            //var copper = new Resource { Id = 2, Name = "Copper", Price = 4.0, CountAvailable = 50 };
+            var users = new List<User>
+            {
+                new User
+                {
+                    Id = "karnage11i",
+                    DisplayName = "Alex Karney",
+                    ImageName = "ak"
+                },
+                new User
+                {
+                    Id = "magsatire",
+                    DisplayName = "Jack McGrath",
+                    ImageName = "jm"
+                },
+                new User
+                {
+                    Id = "1232101260",
+                    DisplayName = "Chris Quigley",
+                    ImageName = "cq"
+                },
+                new User
+                {
+                    Id = "1238290776",
+                    DisplayName = "Joshua Landy",
+                    ImageName = "jl"
+                },
+                new User
+                {
+                    Id = "1233033915",
+                    DisplayName = "Alex Barker",
+                    ImageName = "ab"
+                },
+                new User
+                {
+                    Id = "1244598275",
+                    DisplayName = "Daniel Hornblower",
+                    ImageName = "db"
+                },
+                new User
+                {
+                    Id = "genjamon1234",
+                    DisplayName = "Josh Anderson",
+                    ImageName = "ja"
+                },
+                new User
+                {
+                    Id = "braeden.wilson",
+                    DisplayName = "Braeden Wilson",
+                    ImageName = "bw"
+                },
+                new User
+                {
+                    Id = "1278556031",
+                    DisplayName = "Matt Knightbridge",
+                    ImageName = "mk"
+                },
+                new User
+                {
+                    Id = "griffkyn22",
+                    DisplayName = "Griffyn Heels",
+                    ImageName = "gh"
+                },
+            };
 
-            //modelBuilder.Entity<Resource>(entity =>
-            //{
-            //    entity.HasKey(e => e.Id);
-            //    entity.Property(e => e.Name).IsRequired();
-            //    entity.HasData(
-            //        iron,
-            //        copper);
-            //});
-
-            //var london = new Contributor { Id = 1, Name = "London", ContributionFactor = 1, Size = 100 };
-            //var manchester = new Contributor { Id = 2, Name = "Manchester", ContributionFactor = 1, Size = 50 };
-
-            //modelBuilder.Entity<Contributor>(entity =>
-            //{
-            //    entity.HasKey(e => e.Id);
-            //    entity.Property(e => e.Name).IsRequired();
-            //    entity.HasData(
-            //       london,
-            //        manchester);
-            //});
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.HasData(users);
+            });
         }
     }
 }
