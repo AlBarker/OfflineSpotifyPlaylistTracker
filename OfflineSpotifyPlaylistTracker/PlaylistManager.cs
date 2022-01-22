@@ -1,6 +1,4 @@
 ﻿using OfflineSpotifyPlaylistTracker.Domain.Models;
-using OfflineSpotifyPlaylistTracker.Models;
-
 namespace OfflineSpotifyPlaylistTracker
 {
     public class PlaylistManager

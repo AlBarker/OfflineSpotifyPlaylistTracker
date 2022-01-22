@@ -12,7 +12,7 @@ namespace OfflineSpotifyPlaylistTracker.Domain
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 
-            var connectionString = "server=localhost;database=tradeup;user=root;password=admin";
+            var connectionString = "server=localhost;database=spotify-playlist-tracker;user=root;password=admin";
             optionsBuilder.UseMySql(
                 connectionString, ServerVersion.AutoDetect(connectionString))
                 // The following three options help with debugging, but should

@@ -1,4 +1,4 @@
-﻿using OfflineSpotifyPlaylistTracker.Models;
+using OfflineSpotifyPlaylistTracker.Domain.Models;
 using SpotifyAPI.Web;
 using System.Linq;
 
