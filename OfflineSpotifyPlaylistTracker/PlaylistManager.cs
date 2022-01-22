@@ -26,7 +26,11 @@ namespace OfflineSpotifyPlaylistTracker
                     Name = "Hurricane",
                     FileName = "Aitch, AJ Tracey, Tay Keith Rain",
                 };
-                _playbackService.PlayFillerSound(i);
+                if (i % 5 == 0 || i < 5)
+                {
+                    _playbackService.PlayFillerSound(i);
+
+                }
                 _playbackService.PlaySong(track);
             }
         }

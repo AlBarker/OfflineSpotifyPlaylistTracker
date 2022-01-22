@@ -1,6 +1,7 @@
 using OfflineSpotifyPlaylistTracker.Domain.Models;
 using SpotifyAPI.Web;
 using System.Linq;
+using System.Web;
 
 namespace OfflineSpotifyPlaylistTracker
 {
@@ -29,7 +30,7 @@ namespace OfflineSpotifyPlaylistTracker
                     Id = i + 1,
                     Name = track.Name,
                     Artist = artists,
-                    FileName = String.Join(" ", artists, track.Name),
+                    FileName = HttpUtility.UrlEncode(String.Join(" ", artists, track.Name)),
                     AlbumArt = track.Album.Images.FirstOrDefault()?.Url,
                     UserId = v.AddedBy.Id
                 };

@@ -42,5 +42,37 @@ namespace OfflineSpotifyPlaylistTracker
 
             await context.SaveChangesAsync();
         }
+
+        public async Task DownloadAlbumArt(IEnumerable<SpotifyTrackModel> tracks)
+        {
+            Console.WriteLine("Starting to download album art. Clearing directory...");
+            System.IO.DirectoryInfo di = new DirectoryInfo("C:\\Countdown\\art\\");
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            Console.WriteLine("Directory cleared");
+            foreach (var track in tracks)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    using (Stream streamToReadFrom = await client.GetStreamAsync(track.AlbumArt))
+                    {
+                        string fileToWriteTo = Path.GetFullPath($"C:\\Countdown\\art\\{track.FileName}.png");
+                        //Console.WriteLine($"Downloading album art from {track.AlbumArt} and writing to {track.FileName}");
+                        using (Stream streamToWriteTo = File.Open(fileToWriteTo, FileMode.Create))
+                        {
+                            await streamToReadFrom.CopyToAsync(streamToWriteTo);
+                        }
+
+                        Console.WriteLine($"Finished downloading album art for {track.Name} {track.Artist}");
+                    }
+                }
+            }
+
+            return;
+           
+        }
     }
 }

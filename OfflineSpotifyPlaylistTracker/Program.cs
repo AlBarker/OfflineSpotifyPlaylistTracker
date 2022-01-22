@@ -5,10 +5,28 @@ var repositorySerivce = new RepositoryService();
 var playlistManager = new PlaylistManager();
 var spotifyService = new SpotifyService(repositorySerivce);
 
-//playlistManager.StartPlaylist();
-await repositorySerivce.ClearAllTracks();
-var tracks = await spotifyService.GetPlaylistTracks();
-await repositorySerivce.AddTracks(tracks);
+//var args = Environment.GetCommandLineArgs();
 
+if (args.Length == 0)
+{
+	Console.WriteLine("At least one argument is required");
+	return;
+}
 
-Console.Read();
+var command = args[0];
+
+switch (command)
+{
+	case "start":
+		playlistManager.StartPlaylist();
+		break;
+	case "init-playlist":
+        await repositorySerivce.ClearAllTracks();
+        var tracks = await spotifyService.GetPlaylistTracks();
+        await repositorySerivce.AddTracks(tracks);
+        await repositorySerivce.DownloadAlbumArt(tracks);
+		break;
+	default:
+		Console.WriteLine("Invalid command");
+		break;
+}
