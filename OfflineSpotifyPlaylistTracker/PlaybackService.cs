@@ -13,14 +13,16 @@ namespace OfflineSpotifyPlaylistTracker
     {
         public void PlaySong(Track track)
         {
-            string audioFileName = $"C:\temp\\{track.FileName}.mp3";
+            string audioFileName = $"C:\\temp\\{track.FileName}.mp3";
             PlayAudioFile(audioFileName);
+            Console.WriteLine($"Finished playing track {track.Name}");
         }
 
         public void PlayFillerSound(int trackNumber)
         {
-            string audioFileName = $"C:\\temp\\{trackNumber}.mp3";
+            string audioFileName = $"C:\\temp\\{trackNumber}.m4a";
             PlayAudioFile(audioFileName);
+            Console.WriteLine($"Finished playing filler sound {trackNumber}");
         }
 
         private void PlayAudioFile(string filePath)
@@ -64,6 +66,13 @@ namespace OfflineSpotifyPlaylistTracker
             while (!playFinished)
             {
                 Thread.Sleep(TimeSpan.FromMilliseconds(1000));
+            }
+
+            if (playFinished)
+            {
+                Thread.Sleep(TimeSpan.FromMilliseconds(1000));
+                Console.WriteLine($"Finished playing file {filePath}");
+                return;
             }
         }
     }
