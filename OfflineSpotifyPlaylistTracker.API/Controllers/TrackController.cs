@@ -7,22 +7,19 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
     [Route("[controller]")]
     public class TrackController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
         private readonly RepositoryService repositoryService;
 
-        public TrackController(ILogger<WeatherForecastController> logger)
+        public TrackController()
         {
-            _logger = logger;
-
             repositoryService = new RepositoryService();
         }
 
         [HttpGet(Name = "GetPlayedTracks")]
-        public async Task<IEnumerable<TrackViewModel>> Get()
+        public async Task<IList<TrackViewModel>> GetAsync()
         {
             var tracks = await repositoryService.GetPlayedTracks();
 
-            return tracks
+            var mappedTracks = tracks
                 .OrderBy(x => x.TrackPosition.Position)
                 .Select(x => new TrackViewModel
             {
@@ -32,7 +29,9 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
                 AddedByName = x.User.DisplayName,
                 AddedByImage = x.User.ImageName,
                 AlbumArt = x.AlbumArt
-            });
+            }).ToList();
+
+            return mappedTracks;
         }
     }
 
