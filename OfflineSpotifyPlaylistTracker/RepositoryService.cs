@@ -19,7 +19,20 @@ namespace OfflineSpotifyPlaylistTracker
                 return null;
             }
 
+            trackPos.IsPlayed = true;
+            await context.SaveChangesAsync();
+
             return trackPos.Track;
+        }
+
+        public async Task<IList<Track>> GetPlayedTracks()
+        {
+            using var context = new SpotifyPlaylistTrackerContext();
+            return await context.Tracks
+                .Include(x => x.TrackPosition)
+                .Include(x => x.User)
+                .Where(x => x.TrackPosition.IsPlayed)
+                .ToListAsync();
         }
 
         public async Task<IList<Track>> GetTracks()

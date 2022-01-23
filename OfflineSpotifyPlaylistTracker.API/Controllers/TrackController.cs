@@ -18,9 +18,21 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
         }
 
         [HttpGet(Name = "GetPlayedTracks")]
-        public IEnumerable<TrackViewModel> Get()
+        public async Task<IEnumerable<TrackViewModel>> Get()
         {
-            var tracks = repositoryService.GetPlayedTracks();
+            var tracks = await repositoryService.GetPlayedTracks();
+
+            return tracks
+                .OrderBy(x => x.TrackPosition.Position)
+                .Select(x => new TrackViewModel
+            {
+                Name = x.Name,
+                Artist = x.Artist,
+                Position = x.TrackPosition.Position,
+                AddedByName = x.User.DisplayName,
+                AddedByImage = x.User.ImageName,
+                AlbumArt = x.AlbumArt
+            });
         }
     }
 
@@ -29,8 +41,8 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
         public string Name { get; set; }
         public string Artist { get; set; }
         public int Position { get; set; }
-        public int AddedByName { get; set; }
-        public int AddedByImage { get; set; }
-        public string AlbumArt { get; set }
+        public string AddedByName { get; set; }
+        public string AddedByImage { get; set; }
+        public string AlbumArt { get; set; }
     }
 }
