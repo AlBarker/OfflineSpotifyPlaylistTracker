@@ -2,7 +2,7 @@
 using OfflineSpotifyPlaylistTracker;
 
 var repositorySerivce = new RepositoryService();
-var playlistManager = new PlaylistManager();
+var playlistManager = new PlaylistManager(repositorySerivce);
 var spotifyService = new SpotifyService(repositorySerivce);
 
 //var args = Environment.GetCommandLineArgs();
@@ -19,6 +19,9 @@ switch (command)
 {
 	case "start":
 		playlistManager.StartPlaylist();
+		break;
+	case "shuffle":
+		await playlistManager.ShufflePlaylist();
 		break;
 	case "init-playlist":
         await repositorySerivce.ClearAllTracks();

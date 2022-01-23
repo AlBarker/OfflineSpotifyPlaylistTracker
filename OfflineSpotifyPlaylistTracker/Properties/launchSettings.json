@@ -12,6 +12,10 @@
     "start playlist": {
       "commandName": "Project",
       "commandLineArgs": "start"
+    },
+    "shuffle playlist": {
+      "commandName": "Project",
+      "commandLineArgs": "shuffle"
     }
   }
 }

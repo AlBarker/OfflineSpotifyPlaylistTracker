@@ -1,17 +1,19 @@
 ﻿using OfflineSpotifyPlaylistTracker.Domain.Models;
+using OfflineSpotifyPlaylistTracker.Extensions;
+
 namespace OfflineSpotifyPlaylistTracker
 {
     public class PlaylistManager
     {
-        private IPlaybackService _playbackService;
-        private RepositoryService _repositoryService;
+        private IPlaybackService playbackService;
+        private RepositoryService repositoryService;
 
         const int CountSongs = 100;
 
-        public PlaylistManager()
+        public PlaylistManager(RepositoryService repositorySerivce)
         {
-            _playbackService = new PlaybackService();
-            _repositoryService = new RepositoryService();
+            playbackService = new PlaybackService();
+            repositoryService = repositorySerivce;
         }
 
         public void StartPlaylist()
@@ -20,7 +22,7 @@ namespace OfflineSpotifyPlaylistTracker
             
             for (int i = currentSong; i > 0; i--)
             {
-                //var track = _repositoryService.GetTrack(i);
+                //var track = repositoryService.GetTrackFromTrackPosition(i);
                 var track = new Track
                 {
                     Name = "Hurricane",
@@ -28,12 +30,29 @@ namespace OfflineSpotifyPlaylistTracker
                 };
                 if (i % 5 == 0 || i < 5)
                 {
-                    _playbackService.PlayFillerSound(i);
+                    playbackService.PlayFillerSound(i);
 
                 }
-                _playbackService.PlaySong(track);
+                playbackService.PlaySong(track);
             }
         }
 
+        public async Task ShufflePlaylist()
+        {
+            var tracks = await repositoryService.GetTracks();
+            tracks.Shuffle();
+
+            var trackPositions = new List<TrackPosition>();
+            foreach (var (track, i) in tracks.WithIndex())
+            {
+                trackPositions.Add(new TrackPosition
+                {
+                    Position = i + 1,
+                    TrackId = track.Id
+                });
+            }
+
+            await repositoryService.ClearAndSaveTrackPositons(trackPositions);
+        }
     }
 }

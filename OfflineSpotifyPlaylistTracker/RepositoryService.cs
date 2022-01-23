@@ -6,9 +6,26 @@ namespace OfflineSpotifyPlaylistTracker
 {
     public class RepositoryService
     {
-        public Track GetTrack(int number)
+        public async Task<Track> GetTrackFromTrackPosition(int trackPosition)
         {
-            throw new NotImplementedException();
+            using var context = new SpotifyPlaylistTrackerContext();
+            var trackPos = await context.TrackPositions
+                .Include(x => x.Track)
+                .FirstOrDefaultAsync(x => x.Position == trackPosition);
+
+            if (trackPos == null)
+            {
+                Console.WriteLine($"Couldn't find track at position {trackPosition}");
+                return null;
+            }
+
+            return trackPos.Track;
+        }
+
+        public async Task<IList<Track>> GetTracks()
+        {
+            using var context = new SpotifyPlaylistTrackerContext();
+            return await context.Tracks.ToListAsync();
         }
 
         public async Task AddTracks(IEnumerable<SpotifyTrackModel> tracks)
@@ -41,6 +58,24 @@ namespace OfflineSpotifyPlaylistTracker
             context.Tracks.RemoveRange(context.Tracks.ToList());
 
             await context.SaveChangesAsync();
+        }
+
+        public async Task ClearAndSaveTrackPositons(IList<TrackPosition> positonsToAdd)
+        {
+            using var context = new SpotifyPlaylistTrackerContext();
+            var currentTrackPositions = context.TrackPositions;
+
+            if (currentTrackPositions != null)
+            {
+                Console.WriteLine("Clearing old track positions");
+                context.TrackPositions.RemoveRange(currentTrackPositions);
+                Console.WriteLine($"Cleared {currentTrackPositions.Count()}");
+            }
+
+            context.TrackPositions.AddRange(positonsToAdd);
+
+            await context.SaveChangesAsync();
+            Console.WriteLine($"Successfully saved {positonsToAdd.Count()} new positions");
         }
 
         public async Task DownloadAlbumArt(IEnumerable<SpotifyTrackModel> tracks)
