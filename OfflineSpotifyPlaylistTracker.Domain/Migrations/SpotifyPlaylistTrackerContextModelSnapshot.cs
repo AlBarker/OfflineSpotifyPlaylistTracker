@@ -57,6 +57,9 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsPlayed")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("Position")
                         .HasColumnType("int");
 
@@ -65,7 +68,8 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TrackId");
+                    b.HasIndex("TrackId")
+                        .IsUnique();
 
                     b.ToTable("TrackPositions");
                 });
@@ -164,12 +168,18 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
             modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.TrackPosition", b =>
                 {
                     b.HasOne("OfflineSpotifyPlaylistTracker.Domain.Models.Track", "Track")
-                        .WithMany()
-                        .HasForeignKey("TrackId")
+                        .WithOne("TrackPosition")
+                        .HasForeignKey("OfflineSpotifyPlaylistTracker.Domain.Models.TrackPosition", "TrackId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Track");
+                });
+
+            modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.Track", b =>
+                {
+                    b.Navigation("TrackPosition")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OfflineSpotifyPlaylistTracker.Domain.Models.User", b =>

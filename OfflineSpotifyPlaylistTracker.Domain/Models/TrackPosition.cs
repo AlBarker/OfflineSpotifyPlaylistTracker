@@ -11,6 +11,7 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Models
         public int Id { get; set; }
         public int Position { get; set; }
         public int TrackId { get; set; }
+        public bool IsPlayed { get; set; }
         public virtual Track Track { get; set; }
     }
 }

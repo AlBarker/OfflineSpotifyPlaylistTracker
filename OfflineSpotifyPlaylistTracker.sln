@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OfflineSpotifyPlaylistTracker.Domain", "OfflineSpotifyPlaylistTracker.Domain\OfflineSpotifyPlaylistTracker.Domain.csproj", "{3C9A7C0F-ECC3-4619-A577-11FC3A912BE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfflineSpotifyPlaylistTracker.API", "OfflineSpotifyPlaylistTracker.API\OfflineSpotifyPlaylistTracker.API.csproj", "{DCFC8C76-ADF4-4F8F-9651-E537A912D575}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DC2661BF-B30C-4979-B8B1-50DB8B87A4EB} = {DC2661BF-B30C-4979-B8B1-50DB8B87A4EB}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

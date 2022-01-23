@@ -65,7 +65,8 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Position = table.Column<int>(type: "int", nullable: false),
-                    TrackId = table.Column<int>(type: "int", nullable: false)
+                    TrackId = table.Column<int>(type: "int", nullable: false),
+                    IsPlayed = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,7 +100,8 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_TrackPositions_TrackId",
                 table: "TrackPositions",
-                column: "TrackId");
+                column: "TrackId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tracks_UserId",
