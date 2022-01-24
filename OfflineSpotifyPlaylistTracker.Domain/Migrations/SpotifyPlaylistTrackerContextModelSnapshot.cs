@@ -126,7 +126,7 @@ namespace OfflineSpotifyPlaylistTracker.Domain.Migrations
                         {
                             Id = "1244598275",
                             DisplayName = "Daniel Hornblower",
-                            ImageName = "db"
+                            ImageName = "dh"
                         },
                         new
                         {

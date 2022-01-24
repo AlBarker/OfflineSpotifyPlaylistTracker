@@ -61,7 +61,7 @@ namespace OfflineSpotifyPlaylistTracker.Domain
                 {
                     Id = "1244598275",
                     DisplayName = "Daniel Hornblower",
-                    ImageName = "db"
+                    ImageName = "dh"
                 },
                 new User
                 {
