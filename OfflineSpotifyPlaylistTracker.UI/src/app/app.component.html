@@ -4,20 +4,21 @@
   </div>
 
   <section *ngIf="tracks; else noTracks">
-    <div *ngFor="let track of tracks; let i = index" class="flex flex-row items-center p-8">
+    <div *ngFor="let track of tracks; let i = index" class="flex flex-row items-center py-8">
+        
         <div>
-          <p class="text-8xl mr-4 italic font-bold">#{{track.position}}</p>
+          <img [id]="i" [src]="track.albumArt" (load)="onImgLoad(i)" class="w-32 mr-4 ml-2">
         </div>
-        <img src="../assets/faces/{{track.addedByImage}}.png" class="w-32"/>
-        <div>
-          <img [id]="i" [src]="track.albumArt" (load)="onImgLoad(i)" class="w-32 mr-4">
-        </div>
-        <div>
+        <div class="z-10 mr-4">
+          <div>
+            <p class="text-xl mb-4 italic font-bold">#{{track.position}}</p>
+          </div>
           <p class="font-bold">{{track.name}}</p>
           <p>{{track.artist}}</p>
-          <p>Added by: {{track.addedByName}}</p>
+          <!-- <p>Added by: {{track.addedByName}}</p> -->
         </div>
-
+        <img src="../assets/faces/{{track.addedByImage}}.png" class="w-40 opacity-50 absolute right-0"/>
+        <img *ngIf="track.position === 1" src="../assets/faces/crown.png" class="w-40 opacity-50 absolute right-0"/>
 
     </div>
   </section>
