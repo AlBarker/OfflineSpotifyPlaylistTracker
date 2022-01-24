@@ -28,7 +28,7 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
                 Position = x.TrackPosition.Position,
                 AddedByName = x.User.DisplayName,
                 AddedByImage = x.User.ImageName,
-                AlbumArt = x.FileName
+                AlbumArt = "../assets/art/" + x.FileName + ".png"
             }).ToList();
 
             return mappedTracks;

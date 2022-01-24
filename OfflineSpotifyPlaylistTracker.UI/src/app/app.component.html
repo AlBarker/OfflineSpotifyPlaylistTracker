@@ -1,10 +1,28 @@
-<section *ngIf="tracks; else noTracks">
-  <div *ngFor="let track of tracks">
-    {{track.name}}
-    <img [src]="sanitizer.bypassSecurityTrustResourceUrl('C:\Countdown\art\100+gecs%2c+Laura+Les%2c+Dylan+Brady+mememe.png')">
+<div id="root">
+  <div class="text-center text-2xl py-4">
+    <h1>Hottest Burn100 2021</h1>
   </div>
-</section>
 
-<ng-template #noTracks>
-  The playlist hasn't started yet... or somethings wrong
-</ng-template>
+  <section *ngIf="tracks; else noTracks">
+    <div *ngFor="let track of tracks; let i = index" class="flex flex-row items-center p-8">
+        <div>
+          <p class="text-8xl mr-4 italic font-bold">#{{track.position}}</p>
+        </div>
+        <img src="../assets/faces/{{track.addedByImage}}.png" class="w-32"/>
+        <div>
+          <img [id]="i" [src]="track.albumArt" (load)="onImgLoad(i)" class="w-32 mr-4">
+        </div>
+        <div>
+          <p class="font-bold">{{track.name}}</p>
+          <p>{{track.artist}}</p>
+          <p>Added by: {{track.addedByName}}</p>
+        </div>
+
+
+    </div>
+  </section>
+
+  <ng-template #noTracks>
+    The playlist hasn't started yet... or somethings wrong
+  </ng-template>
+</div>
