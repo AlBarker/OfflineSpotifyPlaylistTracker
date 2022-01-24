@@ -25,12 +25,14 @@ namespace OfflineSpotifyPlaylistTracker
             {
                 var track = (FullTrack)v.Track;
                 var artists = String.Join(", ", track.Artists.Select(x => x.Name));
+                var fileName = (String.Join(" ", artists, track.Name));
+                var sanitisedFileName = fileName.Replace("/", "").Replace("?", "");
                 return new SpotifyTrackModel
                 {
                     Id = i + 1,
                     Name = track.Name,
                     Artist = artists,
-                    FileName = HttpUtility.UrlEncode(String.Join(" ", artists, track.Name)),
+                    FileName = sanitisedFileName,
                     AlbumArt = track.Album.Images.FirstOrDefault()?.Url,
                     UserId = v.AddedBy.Id
                 };
