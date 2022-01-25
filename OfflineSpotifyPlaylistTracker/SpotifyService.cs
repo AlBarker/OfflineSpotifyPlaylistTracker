@@ -16,8 +16,9 @@ namespace OfflineSpotifyPlaylistTracker
         public async Task<IEnumerable<SpotifyTrackModel>> GetPlaylistTracks()
         {
             var client = await GetClient();
-
-            var playlistResponse = await client.Playlists.GetItems("2rdxeAIgVMRLmNHiIAQqmV");
+            // 2020: 2CuhODa4xTTlemWopeXG71
+            // 2021: 2rdxeAIgVMRLmNHiIAQqmV
+            var playlistResponse = await client.Playlists.GetItems("2CuhODa4xTTlemWopeXG71");
 
             var users = await repositoryService.GetUsers();
 
@@ -26,7 +27,7 @@ namespace OfflineSpotifyPlaylistTracker
                 var track = (FullTrack)v.Track;
                 var artists = String.Join(", ", track.Artists.Select(x => x.Name));
                 var fileName = (String.Join(" ", artists, track.Name));
-                var sanitisedFileName = fileName.Replace("/", "").Replace("?", "");
+                var sanitisedFileName = fileName.Replace("/", "").Replace("?", "").Replace("*", "");
                 return new SpotifyTrackModel
                 {
                     Id = i + 1,

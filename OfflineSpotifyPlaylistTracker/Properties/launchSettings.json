@@ -16,6 +16,10 @@
     "shuffle playlist": {
       "commandName": "Project",
       "commandLineArgs": "shuffle"
+    },
+    "validate": {
+      "commandName": "Project",
+      "commandLineArgs": "validate"
     }
   }
 }

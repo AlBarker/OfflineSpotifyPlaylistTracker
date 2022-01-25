@@ -18,7 +18,7 @@ var command = args[0];
 switch (command)
 {
 	case "start":
-		playlistManager.StartPlaylist();
+		await playlistManager.StartPlaylist();
 		break;
 	case "shuffle":
 		await playlistManager.ShufflePlaylist();
@@ -28,6 +28,10 @@ switch (command)
         var tracks = await spotifyService.GetPlaylistTracks();
         await repositorySerivce.AddTracks(tracks);
         await repositorySerivce.DownloadAlbumArt(tracks);
+		break;
+	case "validate":
+		await repositorySerivce.ValidateTrackNamesAreCorrect();
+		await repositorySerivce.ValidateFillerSoundbytes();
 		break;
 	default:
 		Console.WriteLine("Invalid command");

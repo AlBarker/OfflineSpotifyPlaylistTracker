@@ -16,23 +16,19 @@ namespace OfflineSpotifyPlaylistTracker
             repositoryService = repositorySerivce;
         }
 
-        public void StartPlaylist()
+        public async Task StartPlaylist()
         {
-            var currentSong = CountSongs;
+            var currentSong = await repositoryService.GetCurrentPositionToPlay();
             
             for (int i = currentSong; i > 0; i--)
             {
-                //var track = repositoryService.GetTrackFromTrackPosition(i);
-                var track = new Track
-                {
-                    Name = "Hurricane",
-                    FileName = "Aitch, AJ Tracey, Tay Keith Rain",
-                };
+                var track = await repositoryService.GetTrackFromTrackPosition(i);
                 if (i % 5 == 0 || i < 5)
                 {
                     playbackService.PlayFillerSound(i);
 
                 }
+                Console.WriteLine($"Playing #{i}, {track.Name} by {track.Artist}. Added by {track.User.DisplayName}");
                 playbackService.PlaySong(track);
             }
         }

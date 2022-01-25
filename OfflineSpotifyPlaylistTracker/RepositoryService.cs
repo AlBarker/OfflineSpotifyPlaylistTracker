@@ -11,6 +11,7 @@ namespace OfflineSpotifyPlaylistTracker
             using var context = new SpotifyPlaylistTrackerContext();
             var trackPos = await context.TrackPositions
                 .Include(x => x.Track)
+                .Include(x => x.Track.User)
                 .FirstOrDefaultAsync(x => x.Position == trackPosition);
 
             if (trackPos == null)
@@ -53,7 +54,7 @@ namespace OfflineSpotifyPlaylistTracker
                 Artist = x.Artist,
                 AlbumArt = x.AlbumArt,
                 FileName = x.FileName,
-                UserId = users.First(u => u.Id == x.UserId).Id,
+                UserId = users.First(u => u.Id == x.UserId)?.Id,
             });
             await context.Tracks.AddRangeAsync(tracksToAdd);
             await context.SaveChangesAsync();
@@ -120,7 +121,49 @@ namespace OfflineSpotifyPlaylistTracker
             }
 
             return;
-           
+        }
+
+        public async Task ValidateTrackNamesAreCorrect()
+        {
+            var tracks = await GetTracks();
+            DirectoryInfo d = new DirectoryInfo(@"C:\Countdown\playlist");
+
+            FileInfo[] files = d.GetFiles("*.m4a");
+            var fileNames = files.Select(f => f.Name);
+
+            foreach (var track in tracks)
+            {
+                if (fileNames.Contains(track.FileName + ".m4a"))
+                    continue;
+                else
+                    Console.WriteLine($"ERROR: MISSING TRACK {track.FileName}");
+            }
+        }
+
+        public async Task ValidateFillerSoundbytes()
+        {
+            var expectedFileNames = new string[]
+            {
+                "100", "95", "90", "85", "80", "75", "70", "65", "60", "55", "50", "45", "40", "35", "30", "25", "20", "15", "10", "5", "4", "3", "2", "1"
+            };
+            DirectoryInfo d = new DirectoryInfo(@"C:\Countdown\filler");
+
+            FileInfo[] files = d.GetFiles("*.m4a");
+            var fileNames = files.Select(f => f.Name);
+
+            foreach (var expectedFilename in expectedFileNames)
+            {
+                if (fileNames.Contains(expectedFilename + ".m4a"))
+                    continue;
+                else
+                    Console.WriteLine($"ERROR: MISSING FILLER SNIPPER {expectedFilename}");
+            }
+        }
+
+        public async Task<int> GetCurrentPositionToPlay()
+        {
+            using var context = new SpotifyPlaylistTrackerContext();
+            return await context.TrackPositions.Where(x => x.IsPlayed == false).Select(x => x.Position).MaxAsync();
         }
     }
 }
