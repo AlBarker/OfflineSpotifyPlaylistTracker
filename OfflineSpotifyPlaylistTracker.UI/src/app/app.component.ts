@@ -17,7 +17,7 @@ export class AppComponent implements AfterViewInit {
   private viewInit = false;
 
   constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {
-    this.http.get('https://localhost:7234/Track').subscribe((res) => this.tracks = res);
+    this.http.get('https://192.168.0.3:7234/Track').subscribe((res) => this.tracks = res);
   }
 
   ngAfterViewInit() {
