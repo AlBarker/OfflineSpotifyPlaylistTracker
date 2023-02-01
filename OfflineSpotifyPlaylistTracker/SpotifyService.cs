@@ -18,7 +18,8 @@ namespace OfflineSpotifyPlaylistTracker
             var client = await GetClient();
             // 2020: 2CuhODa4xTTlemWopeXG71
             // 2021: 2rdxeAIgVMRLmNHiIAQqmV
-            var playlistResponse = await client.Playlists.GetItems("2CuhODa4xTTlemWopeXG71");
+            // 2022: 1goTZfOG1oahHtQCX2CzsA
+            var playlistResponse = await client.Playlists.GetItems("1goTZfOG1oahHtQCX2CzsA");
 
             var users = await repositoryService.GetUsers();
 

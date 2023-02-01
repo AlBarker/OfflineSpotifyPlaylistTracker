@@ -14,8 +14,8 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
             repositoryService = new RepositoryService();
         }
 
-        [HttpGet(Name = "GetPlayedTracks")]
-        public async Task<IList<TrackViewModel>> GetAsync()
+        [HttpGet("list", Name = "GetPlayedTracks")]
+        public async Task<IList<TrackViewModel>> GetTracksAsync()
         {
             var tracks = await repositoryService.GetPlayedTracks();
 
@@ -28,8 +28,21 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
                 Position = x.TrackPosition.Position,
                 AddedByName = x.User.DisplayName,
                 AddedByImage = x.User.ImageName,
-                AlbumArt = "../assets/art/" + x.FileName + ".png"
+                AlbumArt = "/assets/art/" + x.FileName + ".png"
             }).ToList();
+
+            return mappedTracks;
+        }
+
+
+        [HttpGet("usersummary", Name = "TracksByUser")]
+        public async Task<IDictionary<string, int>> GetTracksByUserAsync()
+        {
+            var tracks = await repositoryService.GetPlayedTracks();
+
+            var mappedTracks = tracks
+                .GroupBy(x => x.User.DisplayName)
+                .ToDictionary(x => x.Key, x => x.Count());
 
             return mappedTracks;
         }
