@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using OfflineSpotifyPlaylistTracker.Domain.Models;
 
 namespace OfflineSpotifyPlaylistTracker.Domain
@@ -86,6 +86,12 @@ namespace OfflineSpotifyPlaylistTracker.Domain
                     Id = "griffkyn22",
                     DisplayName = "Griffyn Heels",
                     ImageName = "gh"
+                },
+                new User
+                {
+                    Id = "1252730340",
+                    DisplayName = "Scott Leah",
+                    ImageName = "sl"
                 },
             };
 
