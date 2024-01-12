@@ -8,10 +8,12 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
     public class TrackController : ControllerBase
     {
         private readonly RepositoryService repositoryService;
+        private readonly SpotifyService spotifyService;
 
         public TrackController()
         {
             repositoryService = new RepositoryService();
+            spotifyService = new SpotifyService(repositoryService);
         }
 
         [HttpGet("list", Name = "GetPlayedTracks")]
@@ -43,6 +45,26 @@ namespace OfflineSpotifyPlaylistTracker.API.Controllers
             var mappedTracks = tracks
                 .GroupBy(x => x.User.DisplayName)
                 .ToDictionary(x => x.Key, x => x.Count());
+
+            return mappedTracks;
+        }
+
+        [HttpGet("dump", Name = "GetPlayedTrackDump")]
+        public async Task<IList<TrackViewModel>> GetTrackDumpAsync()
+        {
+            var tracks = await spotifyService.GetPlayedTracksDump();
+
+            var mappedTracks = tracks
+                .OrderBy(x => x.TrackPosition.Position)
+                .Select(x => new TrackViewModel
+                {
+                    Name = x.Name,
+                    Artist = x.Artist,
+                    Position = x.TrackPosition.Position,
+                    AddedByName = x.User.DisplayName,
+                    AddedByImage = x.User.ImageName,
+                    AlbumArt = x.AlbumArt
+                }).ToList();
 
             return mappedTracks;
         }
